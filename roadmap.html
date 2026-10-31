@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workflow updates · Tudor Șerban</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,520&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site">
+      <a href="index.html">Tudor Șerban</a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="cv.html">CV</a>
+        <a href="workflow.html">Workflow</a>
+        <a href="dynamicgo.html">DynamicGO</a>
+        <a href="roadmap.html" aria-current="page">Next</a>
+      </nav>
+    </header>
+
+    <p class="kicker">Todo · surveyed October 2026</p>
+    <h1>What the workflows should absorb</h1>
+    <p class="lede">The factory still assumes a person starts a role in the editor and that a local price table plus a linear state machine are enough. Coding agents changed a lot between May and October 2026. These are update items, not work already done.</p>
+    <p class="meta">Sources for the survey: Cursor Agent SDK (October 2026), public coding-agent release digests through late October 2026 (Claude Code, Codex, Cursor, Devin). Claims below are about product direction, not benchmarks I re-ran.</p>
+
+    <ul class="todo">
+      <li>
+        <strong>Treat some roles as deployable software, not only editor prompts.</strong>
+        Agent SDKs now describe an agent as a folder: instructions, typed tools, skills loaded on demand, MCP connections, and channels. They wake on pull requests, CI, chat, webhooks, and cron, and resume the same session on follow-ups. Decide which factory roles stay human-started in the IDE and which may run on an event. Creative acceptance and the playtest GO stay human.
+      </li>
+      <li>
+        <strong>Add evals as a gate on prompt and routing changes.</strong>
+        Evals can assert which tools ran and what the reply looks like, including replay of a real pull request. A change to the coordinator or the review role should fail an eval before it is treated as ready. Today the gates are review text, build, and tests, which do not lock the agent’s own behavior.
+      </li>
+      <li>
+        <strong>Map each specialist to a subagent or a peer.</strong>
+        Child subagents inherit the parent’s tools and cannot carry their own tool or skill trees. A specialist that needs its own writes, session, and checks should stay a peer. Write that split down so a “one coordinator with many hats” does not collapse the access matrix.
+      </li>
+      <li>
+        <strong>Refresh model routing and the price table.</strong>
+        Defaults moved (faster, cheaper coding models; long reasoning that spends far more tokens; compaction for long sessions). The routing rule “trivial work on a fast model, failures bump a tier” is still right, but the table and the thresholds are stale.
+      </li>
+      <li>
+        <strong>Keep typed handoffs, and add an explicit compaction rule.</strong>
+        Long sessions now compact or remember across days. That helps a coordinator, and it can drop a gate. Define what must survive compaction: current state, open flags, last verdict, and paths to artifacts.
+      </li>
+      <li>
+        <strong>Align modification zones with sandbox allowlists.</strong>
+        Summer and autumn 2026 were full of sandbox escapes and auto-approve bypasses, including paths that could read credentials. The git kill-switch and confirmation zones are the local version of that. They should name deploy, secrets, and push as never auto-approved, matching the host sandbox rather than only the prompt.
+      </li>
+      <li>
+        <strong>Let CI advance only the mechanical states.</strong>
+        Build and unit-test results can arrive from a pipeline. Spec acceptance, review verdicts that need judgment, and playtest stay outside that wake-up. Write the allowed transitions so an event cannot skip PLAYTEST_PASSED.
+      </li>
+      <li>
+        <strong>Allow parallelism only before the code loop.</strong>
+        Coordinators can now fan work out to cloud agents. The creative layer and asset production are already parallel. The code loop stays serial on purpose. Say so in the coordinator prompt so a newer model does not “optimize” it into concurrent edits of the same feature.
+      </li>
+      <li>
+        <strong>Load procedures on demand.</strong>
+        Several products moved from always-on playbooks to skills. The registry already exists. Audit agent prompts so standing instructions stay short and procedures are pulled when the state needs them.
+      </li>
+      <li>
+        <strong>Add a non-merging security pass after the build.</strong>
+        Review and deploy-monitoring bots are common now. A security pass can feed the second review gate with evidence. It must not be able to merge or deploy.
+      </li>
+      <li>
+        <strong>Optional: a budgeted bug-hunt outside the feature machine.</strong>
+        Multi-agent bug search on a large tree finds more issues and spends a lot of tokens. If used, it is a separate mode with a spend cap, not a new state between IMPLEMENTATION and REVIEW.
+      </li>
+    </ul>
+
+    <footer class="site">These items belong in the workflow docs when one of them is actually adopted. Until then they stay a list.</footer>
+  </div>
+</body>
+</html>

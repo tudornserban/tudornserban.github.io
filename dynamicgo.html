@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DynamicGO · Tudor Șerban</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,520&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site">
+      <a href="index.html">Tudor Șerban</a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="cv.html">CV</a>
+        <a href="workflow.html">Workflow</a>
+        <a href="dynamicgo.html" aria-current="page">DynamicGO</a>
+        <a href="roadmap.html">Next</a>
+      </nav>
+    </header>
+
+    <p class="kicker">Instance · game</p>
+    <h1>DynamicGO</h1>
+    <p class="lede">A real-time zone-control game: two sides place anchors, hold territory, and try to encircle. The client is a web build; the simulation and server are C++. The agent factory from the <a href="workflow.html">generic workflow</a> is instantiated here at maturity tier T2.</p>
+    <p>There is no unattended orchestrator in the repository. A person picks a role in the editor, or a coordinator prompt delegates. Specs, test plans, and code on disk are the shared state. Agents pass paths, not transcripts.</p>
+    <p>Public build (the certificate is self-signed until a domain is attached): <a href="https://89.167.105.97/games/dynamicgo/">project page</a> · <a href="https://89.167.105.97/games/dynamicgo/play/">play</a>. Source stays private.</p>
+
+    <h2>What changed from the generic loop</h2>
+    <p>The code machine is the generic one, with game names on the last gates. Creative work is still not a state. It is checked before <em>SPEC_ACCEPTED</em>.</p>
+    <pre>[mechanic accepted, plus lore / visual / audio / UI if the feature needs them]
+        ↓
+SPEC_ACCEPTED
+TEST_PLAN_READY
+REVIEW_TESTS_PASSED          review, first gate
+IMPLEMENTATION
+REVIEW_CODE_PASSED           review, second gate
+BUILD_PASSED                 cmake
+UNIT_TESTS_PASSED            ctest
+GAMEPLAY_TESTS_PASSED        QA report
+PLAYTEST_PASSED              human GO / NO-GO
+FEATURE_READY                docs, then a documentation audit</pre>
+    <p>Debug, blocked-by-dependency, and retry counters live on the coordinator. Thresholds route a failed review or a failed build back to the right specialist instead of restarting the feature from scratch.</p>
+
+    <h2>Who does what</h2>
+    <table>
+      <tr><th>Moment</th><th>Role</th><th>Artifact</th></tr>
+      <tr><td>Before the loop</td><td>Game design, lore, graphics, sound, UX</td><td>Accepted specs and flags</td></tr>
+      <tr><td>Spec accepted</td><td>Feature planner</td><td>Feature understanding</td></tr>
+      <tr><td>Test plan</td><td>TDD planner</td><td>Plan and test stubs</td></tr>
+      <tr><td>Review gates</td><td>Review</td><td>Verdict on the plan, then on the code</td></tr>
+      <tr><td>Implementation</td><td>Game coding, or graphics if the spec says rendering</td><td>Code, and web or server sync when the feature crosses that boundary</td></tr>
+      <tr><td>Build and unit tests</td><td>The shell</td><td>CMake and ctest</td></tr>
+      <tr><td>Gameplay report</td><td>QA / playtest</td><td>Structured report</td></tr>
+      <tr><td>Playtest</td><td>A person</td><td>GO or NO-GO after a real match</td></tr>
+      <tr><td>Ready</td><td>Documentation, then an auditor</td><td>Epic notes and a consistency pass</td></tr>
+    </table>
+    <p>Support roles stay single-purpose: a strategic agent for questions and modification zones, a profiler for preference signals, a workflow architect who does not write game code, and an infrastructure agent for deploy. Skipping the coordinator means the person invoking one specialist has to enforce the gates themselves.</p>
+
+    <h2>Starting a feature</h2>
+    <ol>
+      <li>Name the feature and attach it to an epic. Anchor the description in the project’s assumptions and existing specs.</li>
+      <li>Run game design until the mechanic spec is accepted. Run lore, graphics, UX, or sound first if the feature touches them.</li>
+      <li>Hand the coordinator the feature id, the epic, and the paths to those accepted specs.</li>
+      <li>At playtest, play a match and answer GO or NO-GO. The coordinator is not allowed to mark the feature ready without GO.</li>
+    </ol>
+
+    <h2>Why T2</h2>
+    <p>DynamicGO has stable creative gates and more than one surface (simulation, web client, server). That is the T2 bar: typed handoffs, a hierarchical design knowledge base, recommendations that carry a confidence, and an access matrix. A shared tool server and monthly routing review (T3) are optional, not required to ship a feature.</p>
+    <p class="meta">The public catalog that lists this title with other games and apps is a separate site from this profile.</p>
+    <footer class="site"><a href="workflow.html">Generic workflow</a> · <a href="roadmap.html">What to update next</a></footer>
+  </div>
+</body>
+</html>

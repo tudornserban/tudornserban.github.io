@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generic agentic workflow · Tudor Șerban</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,520&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site">
+      <a href="index.html">Tudor Șerban</a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="cv.html">CV</a>
+        <a href="workflow.html" aria-current="page">Workflow</a>
+        <a href="dynamicgo.html">DynamicGO</a>
+        <a href="roadmap.html">Next</a>
+      </nav>
+    </header>
+
+    <p class="kicker">Generic pattern</p>
+    <h1>A factory for unreliable workers</h1>
+    <p class="lede">LLM agents fail when they share one unbounded context, improvise handoffs, and mix planning with implementation. This workflow treats them as a software factory: named roles, a state machine, small typed handoffs, and a maturity ladder so a spike is not forced to carry a studio process.</p>
+    <p>The same skeleton was first used on a C++ trading engine, then adapted to games and Android. Coordination, retries, review gates, and the micro-TDD cycle stay fixed. Domain playbooks rename the gates and add specialists. They do not invent a new control loop. <a href="dynamicgo.html">DynamicGO</a> is one instance.</p>
+
+    <h2>Layers</h2>
+    <p>Creative and product work sits outside the automated loop. Planning, implementation, quality, and release sit inside it. Open-ended judgment is not a state in a closed quality automaton.</p>
+    <pre>Creative / product     approved artifacts and flags
+        ↓
+Planning               epics → feature specs → coordinator
+        ↓
+Implementation         TDD plan → code → build
+        ↓
+Quality                review, domain tests, playtest or UI
+        ↓
+Infra / release</pre>
+
+    <h2>The code loop</h2>
+    <p>Specialists advance one feature through a linear machine. Names change by domain. Structure does not.</p>
+    <pre>SPEC_ACCEPTED
+  → TEST_PLAN_READY
+  → REVIEW_TESTS_PASSED
+  → IMPLEMENTATION
+  → REVIEW_CODE_PASSED
+  → BUILD_PASSED
+  → UNIT_TESTS_PASSED
+  → domain integration
+  → domain end-to-end
+  → FEATURE_READY</pre>
+    <p>Trading used backtest and simulated-live. Games use gameplay and a human playtest. Android uses integration and UI. Rollback, retry budgets, a debug state, and human escalation stay the same.</p>
+    <p>The coding micro-cycle inside implementation is ordinary TDD: plan, failing test, implement, build, re-run, review, optional commit. Language and build system are skill addenda.</p>
+
+    <h2>What stays outside the machine</h2>
+    <p>Design, UX, and art direction produce prerequisite flags (<em>mechanic accepted</em>, <em>UX accepted</em>, <em>visual assets ready</em>). The coordinator checks those flags before implementation starts. A second coordinator can run asset production in parallel: briefs and style constraints in, class-level plans out, then style, permanence, and cost checks. Engine integration is a later step.</p>
+
+    <h2>Contracts</h2>
+    <table>
+      <tr><th>Mechanism</th><th>What it is for</th></tr>
+      <tr><td>Handoff records</td><td>Pointers, a context pack, and a difficulty tag. Not a pasted transcript or a whole knowledge base.</td></tr>
+      <tr><td>Access matrix</td><td>Each role may write a narrow tree. Prompts and tool allowlists enforce it; a human still reviews.</td></tr>
+      <tr><td>Git kill-switch</td><td>Agents may edit and test while mutating Git is deferred and logged. One workspace flag.</td></tr>
+      <tr><td>Modification zones</td><td>Core systems ask before they change. Tests and docs can proceed.</td></tr>
+      <tr><td>Recommendations with confidence</td><td>From the second maturity tier: evidence, a number, a disconfirming test, and a user override.</td></tr>
+    </table>
+
+    <h2>Memory and cost</h2>
+    <p>A strategic knowledge base is layered: navigation, pillars, topic pages, then links to specs. Higher tiers load a context pack from an index instead of walking the tree. A user profiler stores preference signals so defaults track the director. Each loop run records difficulty, model routing, tokens, estimated cost, wrong assumptions, and review failures. A local price table feeds routing: trivial work on a fast model; repeated failures bump the next run. Billing from the IDE is not assumed.</p>
+
+    <h2>Maturity</h2>
+    <table>
+      <tr><th>Tier</th><th>When</th><th>What you add</th></tr>
+      <tr><td>T0</td><td>Spike</td><td>One agent. Skills as needed.</td></tr>
+      <tr><td>T1</td><td>Repeating features</td><td>Coordinator loop and telemetry.</td></tr>
+      <tr><td>T2</td><td>Creative gates, several surfaces</td><td>Typed handoffs, knowledge hierarchy, confidence recommendations, access matrix.</td></tr>
+      <tr><td>T3</td><td>Cost governance, many titles</td><td>Tool server for search and handoff checks, aggregated telemetry, routing review.</td></tr>
+    </table>
+    <p>A paused title can drop a tier in the docs. History stays.</p>
+    <p>Templates mark generic sections versus title-specific ones. There is no runtime inheritance: markdown stays reviewable, and a check can flag drift. Skills declare the tier they require.</p>
+
+    <h2>What transfers</h2>
+    <p>The skill is not “many chat agents.” It is operations design: one control loop, domain adapters at the edges, typed interfaces, write-scoping, gated side effects, and complexity that is earned. Creative work stays human-gated and parallel. Implementation stays test-gated and serial.</p>
+    <p class="meta">Items that this design does not yet absorb — evals, event-driven agents, newer model routing — are listed on <a href="roadmap.html">Next</a>.</p>
+    <footer class="site"><a href="dynamicgo.html">See the DynamicGO instance</a></footer>
+  </div>
+</body>
+</html>
